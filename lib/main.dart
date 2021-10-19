@@ -23,6 +23,8 @@ class _MyAppState extends State<MyApp> {
   double _kelvin = 0;
   double _fahrenheit = 0;
   double _reamur = 0;
+  var listSatuanSuhu = ["Kelvin", "Reamur", "Fahrenheit"];
+  String selectedDropdown = "Kelvin";
   final _formKey = GlobalKey<FormState>();
 
   _konversiSuhu() {
@@ -36,10 +38,16 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  _onDropdownChanged(value) {
+    setState(() {
+      selectedDropdown = value.toString();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Konversi Suhu',
+      title: 'Konversi Suhu V2',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -51,11 +59,26 @@ class _MyAppState extends State<MyApp> {
         body: Container(
           margin: const EdgeInsets.all(8),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               Form(
                 key: _formKey,
                 child: Input(etInput: etInput),
+              ),
+              Container(
+                margin: const EdgeInsets.fromLTRB(100, 0, 100, 20),
+                child: DropdownButton(
+                  items: listSatuanSuhu.map((String value) {
+                    return DropdownMenuItem(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  value: selectedDropdown,
+                  onChanged: _onDropdownChanged,
+                  isExpanded: true,
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
