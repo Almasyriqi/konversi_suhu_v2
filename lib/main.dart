@@ -20,20 +20,54 @@ class _MyAppState extends State<MyApp> {
   TextEditingController etInput = TextEditingController();
   //variabel berubah
   double _inputUser = 0;
-  double _kelvin = 0;
-  double _fahrenheit = 0;
-  double _reamur = 0;
+  double _result = 0;
   var listSatuanSuhu = ["Kelvin", "Reamur", "Fahrenheit"];
   String selectedDropdown = "Kelvin";
+  List<String> listHasil = [];
   final _formKey = GlobalKey<FormState>();
 
   _konversiSuhu() {
     setState(() {
       if (_formKey.currentState!.validate()) {
+        // ignore: avoid_print
+        print(listHasil.length);
         _inputUser = double.parse(etInput.text);
-        _reamur = 4 / 5 * _inputUser;
-        _fahrenheit = 9 / 5 * _inputUser + 32;
-        _kelvin = _inputUser + 273;
+        switch (selectedDropdown) {
+          case "Kelvin":
+            {
+              // statements;
+              _result = _inputUser + 273;
+              listHasil.add("Konversi dari : " +
+                  "$_inputUser" +
+                  " ke " +
+                  "$_result" +
+                  " Kelvin");
+            }
+            break;
+
+          case "Reamur":
+            {
+              //statements;
+              _result = _inputUser * 4 / 5;
+              listHasil.add("Konversi dari : " +
+                  "$_inputUser" +
+                  " ke " +
+                  "$_result" +
+                  " Reamur");
+            }
+            break;
+          case "Fahrenheit":
+            {
+              //statements;
+              _result = _inputUser * 4 / 5;
+              listHasil.add("Konversi dari : " +
+                  "$_inputUser" +
+                  " ke " +
+                  "$_result" +
+                  " Fahrenheit");
+            }
+            break;
+        }
       }
     });
   }
@@ -67,7 +101,7 @@ class _MyAppState extends State<MyApp> {
                 child: Input(etInput: etInput),
               ),
               Container(
-                margin: const EdgeInsets.fromLTRB(100, 0, 100, 20),
+                margin: const EdgeInsets.fromLTRB(100, 0, 100, 0),
                 child: DropdownButton(
                   items: listSatuanSuhu.map((String value) {
                     return DropdownMenuItem(
@@ -81,19 +115,10 @@ class _MyAppState extends State<MyApp> {
                 ),
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Result(
-                    result: _kelvin,
-                    name: "Suhu Kelvin",
-                  ),
-                  Result(
-                    result: _fahrenheit,
-                    name: "Suhu Fahrenheit",
-                  ),
-                  Result(
-                    result: _reamur,
-                    name: "Suhu Reamur",
+                    result: _result,
                   ),
                 ],
               ),
@@ -102,7 +127,10 @@ class _MyAppState extends State<MyApp> {
                   minimumSize: const Size(double.infinity, 50),
                 ),
                 onPressed: _konversiSuhu,
-                child: const Text('Konversi Suhu'),
+                child: const Text(
+                  'Konversi Suhu',
+                  style: TextStyle(fontSize: 24),
+                ),
               ),
             ],
           ),
