@@ -59,7 +59,7 @@ class _MyAppState extends State<MyApp> {
           case "Fahrenheit":
             {
               //statements;
-              _result = _inputUser * 4 / 5;
+              _result = 9 / 5 * _inputUser + 32;
               listHasil.add("Konversi dari : " +
                   "$_inputUser" +
                   " ke " +
@@ -76,6 +76,7 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       selectedDropdown = value.toString();
     });
+    _konversiSuhu();
   }
 
   @override
@@ -132,6 +133,31 @@ class _MyAppState extends State<MyApp> {
                   style: TextStyle(fontSize: 24),
                 ),
               ),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(0, 25, 0, 0),
+                child: Center(
+                  child: Text(
+                    "Riwayat Konversi",
+                    style: TextStyle(fontSize: 28),
+                  ),
+                ),
+              ),
+              Expanded(
+                  child: ListView.builder(
+                      itemCount: listHasil.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                            margin: const EdgeInsets.only(top: 20),
+                            child: SingleChildScrollView(
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 15),
+                                child: Text(
+                                  listHasil[index],
+                                  style: const TextStyle(fontSize: 17),
+                                ),
+                              ),
+                            ));
+                      }))
             ],
           ),
         ),
